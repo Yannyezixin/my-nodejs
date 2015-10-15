@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 function copy(src, dst) {
-    fs.writeFileSync(dst, fs.readFileSync(src), function (err) {
+    fs.writeFile(dst, fs.readFile(src), function (err) {
         if (err == null) {
             console.log('writefile success');
         } else {
