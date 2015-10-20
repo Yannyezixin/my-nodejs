@@ -1,0 +1,28 @@
+{
+  "name": "scrapy-cnodejs-sync",
+  "version": "1.0.0",
+  "description": "This is a demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/Yannyezixin/my-nodejs/lesson/lesson4"
+  },
+  "keywords": [
+    "spider",
+    "cheerio",
+    "superagent",
+    "eventproxy"
+  ],
+  "author": "Yannyezixin",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "eventproxy": "^0.3.4",
+    "express": "^4.13.3",
+    "superagent": "^1.4.0",
+    "url": "^0.11.0"
+  }
+}
