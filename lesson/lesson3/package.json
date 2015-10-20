@@ -1,6 +1,6 @@
 {
   "name": "scrapy-cnodejs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This is a superagent demo",
   "main": "index.js",
   "scripts": {
