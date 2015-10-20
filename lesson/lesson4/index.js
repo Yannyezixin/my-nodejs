@@ -1,6 +1,6 @@
 var express = require('express'),
     eventproxy = require('eventproxy'),
-    request = require('superagent'),
+    superagent = require('superagent'),
     cheerio = require('cheerio');
     url = require('url');
 
@@ -10,11 +10,11 @@ var _url = 'https://cnodejs.org';
 
 app.get('/', function (req, res) {
 
-    var data = [];
-
-    request.get(_url).end(function (err, sRes) {
+    superagent.get(_url).end(function (err, sRes) {
         if (err) throw err;
-        $ = cheerio.load(sRes.text);
+
+        var data = [];
+        var $ = cheerio.load(sRes.text);
         $('.cell').each(function (idx, element) {
             var $this = $(this);
             var user = $this.find('img').attr('title');
@@ -24,30 +24,33 @@ app.get('/', function (req, res) {
                 title: target.attr('title'),
                 href: url.resolve(_url, target.attr('href')),
             });
-
         });
-        res.send(data);
+
+        var eq = new eventproxy();
+        eq.after('topic_html', data.length, function (topics) {
+            topics = topics.map(function (topicPair) {
+                var item = topicPair[0];
+                var commentHtml = topicPair[1];
+                var $ = cheerio.load(commentHtml);
+                return {
+                    user: item.user,
+                    title: item.title,
+                    href: item.href,
+                    comment1: $('.reply_content').eq(0).html(),
+                }
+            });
+
+            res.send(topics);
+        });
+
+        data.forEach(function (item) {
+            var item = item;
+            superagent.get(item.href).end(function (err, sRes) {
+                console.log('fetch ' + item.href + ' successful!');
+                eq.emit('topic_html', [item, sRes.text]);
+            });
+        });
     });
-
-    /*
-    for (var i = 0; i < data.length; i++) {
-        var item = data[i];
-        var url = _url + item.href;
-        request.get(url).end(function (err, sRes) {
-            if (err) throw err;
-            $ = cheerio.load(sRes.text);
-            var reply = $("#reply1");
-            var user = reply.find('img').attr('title');
-            var content = reply.find('.markdown-text').html();
-            item.reply = {
-                user: user,
-                content: content
-            };
-            data[i] = item;
-        });
-    }
-    */
-
 
 });
 
