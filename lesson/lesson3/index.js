@@ -14,11 +14,14 @@ app.get('/', function (req, res) {
         if (err) throw err;
 
         $ = cheerio.load(res.text);
-        $('.topic_title').each(function (idx, element) {
+        $('.cell').each(function (idx, element) {
             var $this = $(this);
+            var user = $this.find('img').attr('title');
+            var target = $this.find('.topic_title');
             data.push({
-                title: $this.attr('title'),
-                href: $this.attr('href')
+                user: user,
+                title: target.attr('title'),
+                href: target.attr('href')
             });
         });
 
