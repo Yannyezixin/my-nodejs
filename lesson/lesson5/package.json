@@ -1,0 +1,21 @@
+{
+  "name": "spider-async",
+  "version": "1.0.0",
+  "description": "this is a demo of async",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "async"
+  ],
+  "author": "Yannyezixin",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.4.2",
+    "cheerio": "^0.19.0",
+    "express": "^4.13.3",
+    "moment": "^2.10.6",
+    "superagent": "^1.4.0"
+  }
+}
